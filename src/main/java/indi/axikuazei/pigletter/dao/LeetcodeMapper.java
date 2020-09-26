@@ -2,8 +2,8 @@ package indi.axikuazei.pigletter.dao;
 
 
 import indi.axikuazei.pigletter.dao.entity.Leetcode;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @author axikuazei
  * @date 2020/9/17 下午3:59
  */
-@Repository
+@Mapper
 public interface LeetcodeMapper {
 
     List<Leetcode> selectLeetcodes();

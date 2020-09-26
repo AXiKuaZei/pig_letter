@@ -18,10 +18,9 @@ public class IndexController {
     @Autowired
     ArticleService articleService;
 
-    @RequestMapping({"/","index"})
+    @RequestMapping("index")
     public ModelAndView getconsole(){
         ModelAndView mv = new ModelAndView("index");
-        mv.addObject("articles",articleService.selectArticlesPage(0,7));
         return mv;
     }
 }

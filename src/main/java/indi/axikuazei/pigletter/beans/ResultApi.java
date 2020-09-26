@@ -1,4 +1,4 @@
-package beans;
+package indi.axikuazei.pigletter.beans;
 
 /**
  * @author axikuazei

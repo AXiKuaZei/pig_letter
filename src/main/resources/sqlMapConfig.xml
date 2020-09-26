@@ -5,7 +5,7 @@
 
 <configuration>
     <mappers>
-<!--        <package name="cn.pigletter.dao"/>-->
+<!--        <package name="indi.axikuazei.pigletter.dao"/>-->
         <mapper resource="mappers/UserMapper.xml"></mapper>
         <mapper resource="mappers/LeetcodeMapper.xml"></mapper>
         <mapper resource="mappers/ArticleMapper.xml"></mapper>

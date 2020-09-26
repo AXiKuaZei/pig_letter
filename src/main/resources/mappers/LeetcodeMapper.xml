@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.pigletter.dao.LeetcodeMapper">
+<mapper namespace="indi.axikuazei.pigletter.dao.LeetcodeMapper">
 
 
-    <select id="selectLeetcodes"  resultType="cn.pigletter.model.Leetcode">
+    <select id="selectLeetcodes"  resultType="indi.axikuazei.pigletter.dao.entity.Leetcode">
         select * from leetcode order by leetcode_id;
     </select>
 
-    <select id="selectLeetcodesPage"  resultType="cn.pigletter.model.Leetcode">
+    <select id="selectLeetcodesPage"  resultType="indi.axikuazei.pigletter.dao.entity.Leetcode">
         select * from leetcode limit #{id},#{size}
     </select>
 
@@ -17,7 +17,7 @@
         select count(*) from leetcode
     </select>
 
-    <select id="selectLeetcodeByID"  resultType="cn.pigletter.model.Leetcode">
+    <select id="selectLeetcodeByID"  resultType="indi.axikuazei.pigletter.dao.entity.Leetcode">
         select * from leetcode where leetcode_id = #{id};
     </select>
 
