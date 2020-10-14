@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Mapper
 public interface ArticleMapper {
-    //返回所有文章
+
     List<Article> selectArticles();
 
     void insertArticle(Article article);

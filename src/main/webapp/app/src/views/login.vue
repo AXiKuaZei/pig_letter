@@ -10,7 +10,7 @@
             <i class="fa fa-lock" aria-hidden="true"></i>
             <input type="password" placeholder="Password" name="password" required="required">
         </div>
-        <div class="message" th:text="${msg}"></div>
+        <div class="message"></div>
         <input class="button" type="submit" name="submit" value="Sign in">
     </form>
 </div>

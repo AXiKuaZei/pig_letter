@@ -1,6 +1,7 @@
 package indi.axikuazei.pigletter.controller;
 
 
+import indi.axikuazei.pigletter.beans.ResultApi;
 import indi.axikuazei.pigletter.dao.entity.Article;
 import indi.axikuazei.pigletter.service.ArticleService;
 import org.slf4j.Logger;
@@ -8,69 +9,65 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author axikuazei
  * @date 2020/9/17 下午3:59
  */
-@Controller
+@RestController
 public class ArticleController {
 
-    private  final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     ArticleService articleService;
 
 
     @PostMapping("/article")
-    public ModelAndView add(Article article, HttpServletRequest request){
-        ModelAndView mv;
-        mv = new ModelAndView("redirect:/article");
+    public ResultApi add(Article article){
         articleService.insertArticle(article);
-        return mv;
+        return ResultApi.newSuccessResult();
     }
 
     @PutMapping("/article")
-    public ModelAndView update(Article article){
-        ModelAndView mv;
-        mv = new ModelAndView("redirect:/article");
+    public ResultApi update(Article article){
         articleService.updateArticle(article);
-        return mv;
+        return ResultApi.newSuccessResult();
     }
 
     @GetMapping("/article")
-    public ModelAndView show(@RequestParam(value = "apg",defaultValue="1") int apg){
-        ModelAndView mv = new ModelAndView("articles");
-//        mv.addObject("articles",articleService.selectArticles());
-        mv.addObject("articles",articleService.selectArticlesPage(5*(apg-1),5));
-        mv.addObject("apages",articleService.selectArticlesPageNum(5));
-        mv.addObject("apg",apg);
-        return mv;
+    public ResultApi show(@RequestParam(value = "apg",defaultValue="1") int apg, @RequestParam(value = "size",defaultValue="5") int size){
+        logger.info("select article at page:"+apg+"and size:"+size);
+        Map<String, Object> resMap = new HashMap<>();
+        int apages =  articleService.selectArticlesPageNum(size);
+        apg = apg>apages?apages:apg;
+        apg = apg<1?1:apg;
+        List<Article> articles = articleService.selectArticlesPage(size*(apg-1),size);
+        resMap.put("articles", articles);
+        resMap.put("apages", apages);
+        resMap.put("apg", apg);
+        return ResultApi.newSuccessResult(resMap);
     }
 
     @DeleteMapping("/article")
-    public String delete(int article_id){
-
-        articleService.deleteArticleByID(article_id);
-        return "redirect:/admin/console";
-    }
-
-
-    @DeleteMapping("/article/{article_id}")
-    public void deleteA(@PathVariable("article_id") int article_id){
-        articleService.deleteArticleByID(article_id);
+    public ResultApi delete(@RequestBody int articleId){
+        logger.info("delete article:"+articleId);
+        articleService.deleteArticleByID(articleId);
+        return ResultApi.newSuccessResult();
     }
 
 
     @DeleteMapping("/articleMulti")
-    public String delete(@RequestBody Integer[] article_id){
-        for(Integer i:article_id){
+    public ResultApi delete(@RequestBody Integer[] articleId){
+        for(Integer i:articleId){
             articleService.deleteArticleByID(i);
         }
-        return "redirect:/admin/console";
+        return ResultApi.newSuccessResult();
     }
 
 }

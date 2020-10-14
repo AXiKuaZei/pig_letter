@@ -3,34 +3,42 @@ package indi.axikuazei.pigletter.controller;
 
 import indi.axikuazei.pigletter.dao.entity.Leetcode;
 import indi.axikuazei.pigletter.service.LeetcodeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author axikuazei
  * @date 2020/9/17 下午3:59
  */
-@Controller
+@RestController
 public class LeetcodeController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     LeetcodeService leetcodeService;
 
-    /*
-   ====================================================================================================================
-    以下是leetcode
-    */
+
     @GetMapping("/leetcode")
-    public ModelAndView showleetcode(@RequestParam(value = "lpg",defaultValue="1") int lpg){
+    public ModelAndView showleetcode(@RequestParam(value = "lpg",defaultValue="1") int lpg,
+                                     @RequestParam(value = "size",defaultValue="5") int size){
         ModelAndView mv = new ModelAndView("leetcodes");
-//        mv.addObject("leetcodes",leetcodeService.selectLeetcodes());
-        mv.addObject("leetcodes",leetcodeService.selectLeetcodesPage(5*(lpg-1),5));
-        mv.addObject("lpages",leetcodeService.selectLeetcodesPageNum(5));
-        mv.addObject("lpg",lpg);
+        Map<String, Object> resMap = new HashMap<>();
+        int lpages = leetcodeService.selectLeetcodesPageNum(size);
+        lpg = lpg>lpages?lpages:lpg;
+        lpg = lpg<1?1:lpg;
+        resMap.put("lpages", lpages);
+        resMap.put("leetcodes", leetcodeService.selectLeetcodesPage(size*(lpg-1),size));
+        resMap.put("lpg", lpg);
         return mv;
     }
 

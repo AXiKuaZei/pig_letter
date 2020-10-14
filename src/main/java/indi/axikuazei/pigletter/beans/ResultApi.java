@@ -18,6 +18,9 @@ public class ResultApi {
     public static ResultApi newSuccessResult(Object data){
         return new ResultApi(200, "success", data);
     }
+    public static ResultApi newSuccessResult(){
+        return new ResultApi(200, "success", null);
+    }
 
     public static ResultApi newFailResult(Object data){
         return new ResultApi(400, "fail", data);

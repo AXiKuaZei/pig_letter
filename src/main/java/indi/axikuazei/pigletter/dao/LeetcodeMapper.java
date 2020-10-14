@@ -15,7 +15,9 @@ import java.util.List;
 public interface LeetcodeMapper {
 
     List<Leetcode> selectLeetcodes();
+
     void insertLeetcode(Leetcode leetcode);
+
     void deleteLeetcodeByID(int id);
 
     Leetcode selectLeetcodeByID(int id);

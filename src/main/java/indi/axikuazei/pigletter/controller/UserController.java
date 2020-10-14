@@ -3,11 +3,13 @@ package indi.axikuazei.pigletter.controller;
 
 import indi.axikuazei.pigletter.dao.entity.User;
 import indi.axikuazei.pigletter.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,14 +18,16 @@ import javax.servlet.http.HttpServletRequest;
  * @author axikuazei
  * @date 2020/9/17 下午3:59
  */
-@Controller
+@RestController
 public class UserController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     UserService userService;
 
     @GetMapping("/login")
-    public String loginG(){
+    public String login(){
         return "/login";
     }
 
@@ -34,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView loginP(String username, String password, HttpServletRequest req){
+    public ModelAndView login(String username, String password, HttpServletRequest req){
         ModelAndView mv = new ModelAndView();
         User user = userService.selectUserByName(username);
         if(user!=null && user.getUser_password().equals(password) ){

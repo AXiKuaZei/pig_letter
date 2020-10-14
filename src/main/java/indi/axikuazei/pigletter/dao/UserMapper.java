@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
 
     void insertNewUser(User user);
+
     User selectUserByName(String name);
 
 }

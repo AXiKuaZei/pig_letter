@@ -4,11 +4,14 @@ package indi.axikuazei.pigletter.controller;
 import indi.axikuazei.pigletter.dao.entity.User;
 import indi.axikuazei.pigletter.service.ArticleService;
 import indi.axikuazei.pigletter.service.LeetcodeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +21,12 @@ import javax.servlet.http.HttpServletRequest;
  * @author axikuazei
  * @date 2020/9/17 下午3:59
  */
-@Controller
-@RequestMapping("/admin/*")
+@RestController
+@RequestMapping("/admin")
 public class ConsoleController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     ArticleService articleService;
 
