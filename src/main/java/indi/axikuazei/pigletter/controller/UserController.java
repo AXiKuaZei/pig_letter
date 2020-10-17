@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author axikuazei
@@ -46,7 +47,7 @@ public class UserController {
             return ResultApi.newFailResult();
         }else{
             UserTbl user = users.get(0);
-            String pwd = MDUtils.Sha256(password);
+            String pwd = MDUtils.sha256(password,user.getSalt());
             if(user.getPswd().equals(pwd)){
                 req.getSession().setAttribute("user", user);
                 return ResultApi.newSuccessResult();
@@ -66,7 +67,8 @@ public class UserController {
     public ResultApi register(String userName, String password, String nickName){
         UserTbl user = new UserTbl();
         user.setUserName(userName);
-        user.setPswd(MDUtils.Sha256(password));
+        String salt = UUID.randomUUID().toString();
+        user.setPswd(MDUtils.sha256(password,salt));
         user.setNickName(nickName);
         int res = userService.insertNewUser(user);
         return res==1?ResultApi.newSuccessResult():ResultApi.newFailResult();

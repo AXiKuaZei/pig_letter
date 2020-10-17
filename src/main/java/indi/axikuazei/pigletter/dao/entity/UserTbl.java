@@ -9,6 +9,8 @@ public class UserTbl {
 
     private String pswd;
 
+    private String salt;
+
     private String nickName;
 
     private Byte gender;
@@ -71,5 +73,13 @@ public class UserTbl {
 
     public void setRegistedTime(Date registedTime) {
         this.registedTime = registedTime;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

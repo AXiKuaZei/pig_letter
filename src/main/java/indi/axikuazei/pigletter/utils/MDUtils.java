@@ -9,7 +9,11 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MDUtils {
 
-    public static String Sha256(String password){
+    public static String sha256(String password, String salt){
+        return sha256(sha256(password)+salt);
+    }
+
+    public static String sha256(String password){
         String md="";
         try {
             MessageDigest sha = MessageDigest.getInstance("SHA-256");

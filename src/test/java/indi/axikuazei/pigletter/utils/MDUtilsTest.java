@@ -2,9 +2,9 @@ package indi.axikuazei.pigletter.utils;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 /**
  * @author axikuazei
@@ -14,6 +14,18 @@ public class MDUtilsTest {
     @Test
     public void sha1Test(){
         try {
+            String salt1 = UUID.randomUUID().toString();
+            String salt2 = UUID.randomUUID().toString();
+            String salt3 = UUID.randomUUID().toString();
+            String p1 = MDUtils.sha256("m123456", salt1);
+            String p2 = MDUtils.sha256("m123456", salt2);
+            String p3 = MDUtils.sha256("m123456", salt3);
+            System.out.println("salt1: "+salt1);
+            System.out.println("p1: "+p1);
+            System.out.println("salt2: "+salt2);
+            System.out.println("p2: "+p2);
+            System.out.println("salt3: "+salt3);
+            System.out.println("p3: "+p3);
             MessageDigest sha = MessageDigest.getInstance("SHA-256");
             sha.update("hello world".getBytes());
             System.out.println("jdk sha256:"+ byteToString(sha.digest()));

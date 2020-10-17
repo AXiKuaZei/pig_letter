@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS `article_content_tbl`(
 CREATE TABLE IF NOT EXISTS `user_tbl`(
    `user_id` INT UNSIGNED AUTO_INCREMENT,
    `user_name` VARCHAR(32) UNIQUE NOT NULL,
-   `pswd` VARCHAR(32) NOT NULL,
+   `pswd` VARCHAR(64) NOT NULL,
+   `salt` VARCHAR(64) NOT NULL,
    `nick_name` VARCHAR(40) NOT NULL,
    `gender` TINYINT NOT NULL DEFAULT 1,
    `deleted` TINYINT NOT NULL DEFAULT 0,
@@ -30,11 +31,12 @@ CREATE TABLE IF NOT EXISTS `user_tbl`(
 )DEFAULT CHARSET=UTF8MB4;
 
 #-------------------------------init
-INSERT INTO user_tbl(USER_NAME, PSWD, NICK_NAME)
+#pwd=m123456
+INSERT INTO user_tbl(USER_NAME, PSWD, SALT,NICK_NAME)
 VALUES
-       ('axikuazei01','123456','肮脏的小翅膀01'),
-       ('axikuazei02','123456','肮脏的小翅膀02'),
-       ('axikuazei03','123456','肮脏的小翅膀03');
+       ('axikuazei01','b0b738b4d778f725b44feec66a1f917e548786e87c91c7e14487bd2271d52359', '317851be-d8f9-4500-a9af-c743cf85868e','肮脏的小翅膀01'),
+       ('axikuazei02','62c642261287775127388908da26a915a7b49764aa24572f58482adab2bb8408', 'e82ad7cd-b04b-4e7e-8df3-167d2f3fb184','肮脏的小翅膀02'),
+       ('axikuazei03','46797befdc1a5cd3bc8ad5e1dae6caaff13d8333d6c44067f99a2a1a8bb6cdd0', '79a68cef-1009-4a07-8020-229760a34229','肮脏的小翅膀03');
 
 INSERT INTO article_tbl(title, author_id)
 VALUES
