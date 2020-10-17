@@ -1,12 +1,15 @@
 package indi.axikuazei.pigletter.service.impls;
 
 
-import indi.axikuazei.pigletter.dao.UserMapper;
-import indi.axikuazei.pigletter.dao.entity.User;
+import indi.axikuazei.pigletter.dao.UserTblMapper;
+import indi.axikuazei.pigletter.dao.entity.UserTbl;
+import indi.axikuazei.pigletter.dao.entity.UserTblExample;
 import indi.axikuazei.pigletter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author axikuazei
@@ -18,20 +21,26 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImp implements UserService {
 
     @Autowired
-    UserMapper userMapper;
+    UserTblMapper userTblMapper;
 
     @Override
-    public User selectUserByName(String username) {
-        return userMapper.selectUserByName(username);
+    public List<UserTbl> selectUserByName(String userName) {
+        UserTblExample example = new UserTblExample();
+        example.createCriteria().andDeletedEqualTo((byte)0).andUserNameEqualTo(userName);
+        return userTblMapper.selectByExample(example);
     }
 
     @Override
-    public void insertNewUser(User user) {
-        userMapper.insertNewUser(user);
+    public int insertNewUser(UserTbl user) {
+        return userTblMapper.insertSelective(user);
     }
 
     @Override
-    public boolean containsUser(String username) {
-        return selectUserByName(username)!=null;
+    public boolean existsUser(String userName) {
+        UserTblExample example = new UserTblExample();
+        example.createCriteria()
+                .andUserNameEqualTo(userName)
+                .andDeletedEqualTo((byte)0);
+        return userTblMapper.countByExample(example)>0;
     }
 }

@@ -1,8 +1,14 @@
 package indi.axikuazei.pigletter.service.impls;
 
 
-import indi.axikuazei.pigletter.dao.ArticleMapper;
-import indi.axikuazei.pigletter.dao.entity.Article;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import indi.axikuazei.pigletter.dao.ArticleContentTblMapper;
+import indi.axikuazei.pigletter.dao.ArticleTblMapper;
+import indi.axikuazei.pigletter.dao.entity.ArticleContentTbl;
+import indi.axikuazei.pigletter.dao.entity.ArticleContentTblExample;
+import indi.axikuazei.pigletter.dao.entity.ArticleTbl;
+import indi.axikuazei.pigletter.dao.entity.ArticleTblExample;
 import indi.axikuazei.pigletter.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,53 +24,72 @@ import java.util.List;
 @Transactional
 @Service
 public class ArticleServiceImp implements ArticleService {
+
     @Autowired
-    ArticleMapper articleMapper;
+    ArticleTblMapper articleTblMapper;
 
+    @Autowired
+    ArticleContentTblMapper articleContentTblMapper;
 
     @Override
-    public List<Article> selectArticles() {
-        return articleMapper.selectArticles();
+    public List<ArticleTbl> selectArticles() {
+        ArticleTblExample example = new ArticleTblExample();
+        ArticleTblExample.Criteria criteria = example.createCriteria();
+        criteria.andDeletedEqualTo((byte) 0);
+        return articleTblMapper.selectByExample(example);
     }
 
     @Override
-    public List<Article> selectArticlesPage(int id, int size) {
-        return articleMapper.selectArticlesPage(id,size);
+    public PageInfo selectArticlesByPage(int pageNum, int pageSize) {
+        ArticleTblExample example = new ArticleTblExample();
+        example.createCriteria().andDeletedEqualTo((byte) 0);
+        PageHelper.startPage(pageNum, pageSize);
+        List<ArticleTbl> articles = articleTblMapper.selectByExample(example);
+        PageInfo pageInfo = new PageInfo(selectContent(articles));
+        return pageInfo;
     }
 
     @Override
-    public List<Article> selectArticlesPageUser(int id, int size, int user_id) {
-        return articleMapper.selectArticlesPageUser(id,size,user_id);
+    public PageInfo selectArticlesByPageAndUser(int pageNum, int pageSize, int author_id) {
+        ArticleTblExample example = new ArticleTblExample();
+        example.createCriteria().andDeletedEqualTo((byte) 0).andAuthorIdEqualTo(author_id);
+        PageHelper.startPage(pageNum, pageSize);
+        List<ArticleTbl> articles = articleTblMapper.selectByExample(example);
+        PageInfo pageInfo = new PageInfo(selectContent(articles));
+        return pageInfo;
     }
 
     @Override
-    public void insertArticle(Article article) {
-        articleMapper.insertArticle(article);
+    public List<ArticleTbl> selectContent(List<ArticleTbl> articles) {
+        for(ArticleTbl article:articles){
+            ArticleContentTblExample cexample = new ArticleContentTblExample();
+            cexample.createCriteria()
+                    .andArticleIdEqualTo(article.getArticleId())
+                    .andDeletedEqualTo((byte)0);
+            List<ArticleContentTbl> contents= articleContentTblMapper.selectByExampleWithBLOBs(cexample);
+            String content = contents.get(0).getContent();
+            article.setContent(content);
+        }
+        return articles;
     }
 
     @Override
-    public void deleteArticleByID(int id) {
-        articleMapper.deleteArticleByID(id);
+    public int insertArticle(ArticleTbl article) {
+        return articleTblMapper.insertSelective(article);
     }
 
     @Override
-    public Article selectArticleByID(int id) { return articleMapper.selectArticleByID(id);
+    public int deleteArticleByID(int id) {
+        return  articleTblMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void updateArticle(Article article) {
-        articleMapper.updateArticle(article);
+    public ArticleTbl selectArticleByID(int id) {
+        return articleTblMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public int selectArticlesPageNum(int size) {
-        int page=(int)Math.ceil(articleMapper.selectArticlesPageNum()/(float)size);
-        return page>0?page:1;
-    }
-
-    @Override
-    public int selectArticlesPageNumUser(int size, int user_id) {
-        int page=(int)Math.ceil(articleMapper.selectArticlesPageNumUser(user_id)/(float)size);
-        return page>0?page:1;
+    public int updateArticle(ArticleTbl article) {
+        return articleTblMapper.updateByPrimaryKeySelective(article);
     }
 }

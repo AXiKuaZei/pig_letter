@@ -1,19 +1,16 @@
 package indi.axikuazei.pigletter.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import indi.axikuazei.pigletter.beans.ResultApi;
-import indi.axikuazei.pigletter.dao.entity.Article;
+import indi.axikuazei.pigletter.dao.entity.ArticleTbl;
 import indi.axikuazei.pigletter.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author axikuazei
@@ -28,44 +25,39 @@ public class ArticleController {
     ArticleService articleService;
 
 
+    @GetMapping("/article")
+    public ResultApi show(@RequestParam(value = "pageNum",defaultValue="1") int pageNum, @RequestParam(value = "pageSize",defaultValue="5") int pageSize){
+        logger.info("select article at page:"+pageNum+" and size:"+pageSize);
+        PageInfo pageInfo = articleService.selectArticlesByPage(pageNum, pageSize);
+        return ResultApi.newSuccessResult(pageInfo);
+    }
+
     @PostMapping("/article")
-    public ResultApi add(Article article){
+    public ResultApi add(ArticleTbl article){
         articleService.insertArticle(article);
         return ResultApi.newSuccessResult();
     }
 
     @PutMapping("/article")
-    public ResultApi update(Article article){
+    public ResultApi update(ArticleTbl article){
         articleService.updateArticle(article);
         return ResultApi.newSuccessResult();
-    }
-
-    @GetMapping("/article")
-    public ResultApi show(@RequestParam(value = "apg",defaultValue="1") int apg, @RequestParam(value = "size",defaultValue="5") int size){
-        logger.info("select article at page:"+apg+"and size:"+size);
-        Map<String, Object> resMap = new HashMap<>();
-        int apages =  articleService.selectArticlesPageNum(size);
-        apg = apg>apages?apages:apg;
-        apg = apg<1?1:apg;
-        List<Article> articles = articleService.selectArticlesPage(size*(apg-1),size);
-        resMap.put("articles", articles);
-        resMap.put("apages", apages);
-        resMap.put("apg", apg);
-        return ResultApi.newSuccessResult(resMap);
     }
 
     @DeleteMapping("/article")
     public ResultApi delete(@RequestBody int articleId){
         logger.info("delete article:"+articleId);
-        articleService.deleteArticleByID(articleId);
-        return ResultApi.newSuccessResult();
+        int res = articleService.deleteArticleByID(articleId);
+        return res==1?ResultApi.newSuccessResult():ResultApi.newFailResult();
     }
 
 
     @DeleteMapping("/articleMulti")
     public ResultApi delete(@RequestBody Integer[] articleId){
         for(Integer i:articleId){
-            articleService.deleteArticleByID(i);
+            if(articleService.deleteArticleByID(i)==0){
+                return ResultApi.newFailResult();
+            }
         }
         return ResultApi.newSuccessResult();
     }

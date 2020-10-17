@@ -1,8 +1,7 @@
 package indi.axikuazei.pigletter.filter;
 
 
-
-import indi.axikuazei.pigletter.dao.entity.User;
+import indi.axikuazei.pigletter.dao.entity.UserTbl;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -25,8 +24,7 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        User user = (User) req.getSession().getAttribute("user");
-
+        UserTbl user = (UserTbl) req.getSession().getAttribute("user");
         if(user==null){
             resp.sendRedirect(req.getContextPath()+"/index");
         }else{

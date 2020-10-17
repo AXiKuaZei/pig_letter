@@ -1,8 +1,10 @@
 package indi.axikuazei.pigletter.controller;
 
 
-import indi.axikuazei.pigletter.dao.entity.User;
+import indi.axikuazei.pigletter.beans.ResultApi;
+import indi.axikuazei.pigletter.dao.entity.UserTbl;
 import indi.axikuazei.pigletter.service.UserService;
+import indi.axikuazei.pigletter.utils.MDUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author axikuazei
@@ -38,44 +40,36 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView login(String username, String password, HttpServletRequest req){
-        ModelAndView mv = new ModelAndView();
-        User user = userService.selectUserByName(username);
-        if(user!=null && user.getUser_password().equals(password) ){
-            mv.addObject("msg", "welcome!"+username);
-            req.getSession().setAttribute("user", user);
-            mv.setViewName("admin/personalCenter");
+    public ResultApi login(String userName, String password, HttpServletRequest req){
+        List<UserTbl> users = userService.selectUserByName(userName);
+        if(users.size()!=1){
+            return ResultApi.newFailResult();
         }else{
-            mv.addObject("msg", "用户名或密码错误,请重试");
-            mv.setViewName("login");
+            UserTbl user = users.get(0);
+            String pwd = MDUtils.Sha256(password);
+            if(user.getPswd().equals(pwd)){
+                req.getSession().setAttribute("user", user);
+                return ResultApi.newSuccessResult();
+            }else{
+                return ResultApi.newFailResult();
+            }
         }
-        return mv;
     }
 
 
     @GetMapping("/register")
-    public String registerG(){
+    public String register(){
         return "register";
     }
 
     @PostMapping("/register")
-    public ModelAndView registerP(String username, String password, String password2, String email){
-        ModelAndView mv = new ModelAndView();
-        if(password.equals(password2)){
-            if(!userService.containsUser(username)){
-                User user = new User(username,password,email);
-                userService.insertNewUser(user);
-                mv.addObject("msg","恭喜您，"+ username +"，注册成功！已自动为您跳转到登录界面");
-                mv.setViewName("login");
-            }else{
-                mv.addObject("msg","注册失败，用户名已存在");
-                mv.setViewName("register");
-            }
-        }else{
-            mv.addObject("msg","两次密码输入不一致");
-            mv.setViewName("register");
-        }
-        return mv;
+    public ResultApi register(String userName, String password, String nickName){
+        UserTbl user = new UserTbl();
+        user.setUserName(userName);
+        user.setPswd(MDUtils.Sha256(password));
+        user.setNickName(nickName);
+        int res = userService.insertNewUser(user);
+        return res==1?ResultApi.newSuccessResult():ResultApi.newFailResult();
     }
 
     @RequestMapping("/personalCenter")

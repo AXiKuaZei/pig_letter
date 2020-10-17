@@ -1,7 +1,8 @@
 package indi.axikuazei.pigletter.service;
 
 
-import indi.axikuazei.pigletter.dao.entity.Article;
+import com.github.pagehelper.PageInfo;
+import indi.axikuazei.pigletter.dao.entity.ArticleTbl;
 
 import java.util.List;
 
@@ -11,21 +12,19 @@ import java.util.List;
  */
 
 public interface ArticleService {
-    List<Article> selectArticles();
+    List<ArticleTbl> selectArticles();
 
-    List<Article> selectArticlesPage(int id, int size);
+    PageInfo selectArticlesByPage(int pageNum, int pageSize);
 
-    List<Article> selectArticlesPageUser(int id, int size, int user_id);
+    PageInfo selectArticlesByPageAndUser(int pageNum, int pageSize, int authorId);
 
-    void insertArticle(Article article);
+    List<ArticleTbl> selectContent(List<ArticleTbl> articles);
 
-    void deleteArticleByID(int id);
+    int insertArticle(ArticleTbl article);
 
-    Article selectArticleByID(int id);
+    int deleteArticleByID(int id);
 
-    void updateArticle(Article article);
+    ArticleTbl selectArticleByID(int id);
 
-    int selectArticlesPageNum(int size);
-
-    int selectArticlesPageNumUser(int size,int user_id);
+    int updateArticle(ArticleTbl article);
 }

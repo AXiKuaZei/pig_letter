@@ -1,7 +1,9 @@
 package indi.axikuazei.pigletter.service;
 
 
-import indi.axikuazei.pigletter.dao.entity.User;
+import indi.axikuazei.pigletter.dao.entity.UserTbl;
+
+import java.util.List;
 
 /**
  * @author axikuazei
@@ -10,9 +12,9 @@ import indi.axikuazei.pigletter.dao.entity.User;
 
 public interface UserService {
 
-    User selectUserByName(String username);
+    List<UserTbl> selectUserByName(String userName);
 
-    void insertNewUser(User user);
+    int insertNewUser(UserTbl user);
 
-    boolean containsUser(String username);
+    boolean existsUser(String userName);
 }

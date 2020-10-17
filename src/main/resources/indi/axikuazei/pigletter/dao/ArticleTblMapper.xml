@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="indi.axikuazei.pigletter.dao.ArticleTblMapper">
+  <resultMap id="BaseResultMap" type="indi.axikuazei.pigletter.dao.entity.ArticleTbl">
+    <id column="article_id" jdbcType="INTEGER" property="articleId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="author_id" jdbcType="INTEGER" property="authorId" />
+    <result column="published_time" jdbcType="TIMESTAMP" property="publishedTime" />
+    <result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime" />
+    <result column="deleted" jdbcType="TINYINT" property="deleted" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    article_id, title, author_id, published_time, last_updated_time, deleted
+  </sql>
+  <select id="selectByExample" parameterType="indi.axikuazei.pigletter.dao.entity.ArticleTblExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from article_tbl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from article_tbl
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from article_tbl
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="indi.axikuazei.pigletter.dao.entity.ArticleTblExample">
+    delete from article_tbl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="indi.axikuazei.pigletter.dao.entity.ArticleTbl">
+    insert into article_tbl (article_id, title, author_id, 
+      published_time, last_updated_time, deleted
+      )
+    values (#{articleId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{authorId,jdbcType=INTEGER}, 
+      #{publishedTime,jdbcType=TIMESTAMP}, #{lastUpdatedTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="indi.axikuazei.pigletter.dao.entity.ArticleTbl">
+    insert into article_tbl
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        article_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="authorId != null">
+        author_id,
+      </if>
+      <if test="publishedTime != null">
+        published_time,
+      </if>
+      <if test="lastUpdatedTime != null">
+        last_updated_time,
+      </if>
+      <if test="deleted != null">
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="articleId != null">
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null">
+        #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="publishedTime != null">
+        #{publishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedTime != null">
+        #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        #{deleted,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="indi.axikuazei.pigletter.dao.entity.ArticleTblExample" resultType="java.lang.Long">
+    select count(*) from article_tbl
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update article_tbl
+    <set>
+      <if test="record.articleId != null">
+        article_id = #{record.articleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorId != null">
+        author_id = #{record.authorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.publishedTime != null">
+        published_time = #{record.publishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdatedTime != null">
+        last_updated_time = #{record.lastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deleted != null">
+        deleted = #{record.deleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update article_tbl
+    set article_id = #{record.articleId,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      author_id = #{record.authorId,jdbcType=INTEGER},
+      published_time = #{record.publishedTime,jdbcType=TIMESTAMP},
+      last_updated_time = #{record.lastUpdatedTime,jdbcType=TIMESTAMP},
+      deleted = #{record.deleted,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="indi.axikuazei.pigletter.dao.entity.ArticleTbl">
+    update article_tbl
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=INTEGER},
+      </if>
+      <if test="publishedTime != null">
+        published_time = #{publishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdatedTime != null">
+        last_updated_time = #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleted != null">
+        deleted = #{deleted,jdbcType=TINYINT},
+      </if>
+    </set>
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="indi.axikuazei.pigletter.dao.entity.ArticleTbl">
+    update article_tbl
+    set title = #{title,jdbcType=VARCHAR},
+      author_id = #{authorId,jdbcType=INTEGER},
+      published_time = #{publishedTime,jdbcType=TIMESTAMP},
+      last_updated_time = #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      deleted = #{deleted,jdbcType=TINYINT}
+    where article_id = #{articleId,jdbcType=INTEGER}
+  </update>
+</mapper>
