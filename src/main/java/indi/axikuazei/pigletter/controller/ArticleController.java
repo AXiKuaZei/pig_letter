@@ -24,28 +24,34 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
+    @GetMapping("/article/{offset}/{num}")
+    public ResultApi article(@PathVariable("offset") int offset, @PathVariable("num") int num){
+        logger.info("select articles at offset:"+offset+" and num:"+num);
+        List<ArticleTbl> articles = articleService.selectArticles(offset, num);
+        return ResultApi.newSuccessResult(articles);
+    }
 
-    @GetMapping("/article")
-    public ResultApi show(@RequestParam(value = "pageNum",defaultValue="1") int pageNum, @RequestParam(value = "pageSize",defaultValue="5") int pageSize){
-        logger.info("select article at page:"+pageNum+" and size:"+pageSize);
+    @PostMapping("/articlePage")
+    public ResultApi articlePage(@RequestParam(value = "pageNum",defaultValue="1") int pageNum, @RequestParam(value = "pageSize",defaultValue="5") int pageSize){
+        logger.info("select articles at page:"+pageNum+" and size:"+pageSize);
         PageInfo pageInfo = articleService.selectArticlesByPage(pageNum, pageSize);
         return ResultApi.newSuccessResult(pageInfo);
     }
 
     @PostMapping("/article")
-    public ResultApi add(ArticleTbl article){
+    public ResultApi articleAdd(ArticleTbl article){
         articleService.insertArticle(article);
         return ResultApi.newSuccessResult();
     }
 
     @PutMapping("/article")
-    public ResultApi update(ArticleTbl article){
+    public ResultApi articleUpdate(ArticleTbl article){
         articleService.updateArticle(article);
         return ResultApi.newSuccessResult();
     }
 
     @DeleteMapping("/article")
-    public ResultApi delete(@RequestBody int articleId){
+    public ResultApi articleDelete(@RequestBody int articleId){
         logger.info("delete article:"+articleId);
         int res = articleService.deleteArticleByID(articleId);
         return res==1?ResultApi.newSuccessResult():ResultApi.newFailResult();
@@ -53,7 +59,7 @@ public class ArticleController {
 
 
     @DeleteMapping("/articleMulti")
-    public ResultApi delete(@RequestBody Integer[] articleId){
+    public ResultApi articleDelete(@RequestBody Integer[] articleId){
         for(Integer i:articleId){
             if(articleService.deleteArticleByID(i)==0){
                 return ResultApi.newFailResult();

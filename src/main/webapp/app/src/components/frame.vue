@@ -6,7 +6,6 @@
             <li><a href="https://bilibili.com">哔哩哔哩</a></li>
             <li><a href="#">星星海</a></li>
             <li><a href="/article">所有文章</a></li>
-            <li><a href="/leetcode">力扣记录</a></li>
             <li><a href="#">资源站</a></li>
             <li style="float: right;"><a href="/register">注册</a></li>
             <div class="topmenu2">
@@ -39,7 +38,7 @@
                 <h1>今天的标题</h1>
                 <h1>今天的标题</h1>
                 <p class="pre-pre" ></p>
-            </div>            
+            </div>
         </div>
         <div class="sidemenu">
             <div class="card">
@@ -52,7 +51,7 @@
                 <li><a href="#">一些小事</a></li>
                 <li><a href="#">一些小事</a></li>
                 <li><a href="#">一些小事</a></li>
-            </ul>  
+            </ul>
         </div>
     </div>
 </div>

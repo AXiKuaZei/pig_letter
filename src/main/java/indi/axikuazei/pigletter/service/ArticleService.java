@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 public interface ArticleService {
-    List<ArticleTbl> selectArticles();
+    List<ArticleTbl> selectArticles(int offset, int num);
 
     PageInfo selectArticlesByPage(int pageNum, int pageSize);
 

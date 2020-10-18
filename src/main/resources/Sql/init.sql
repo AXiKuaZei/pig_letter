@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS `user_tbl`(
    PRIMARY KEY (`user_id`)
 )DEFAULT CHARSET=UTF8MB4;
 
+CREATE TABLE IF NOT EXISTS
+
 #-------------------------------init
 #pwd=m123456
 INSERT INTO user_tbl(USER_NAME, PSWD, SALT,NICK_NAME)

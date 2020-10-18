@@ -32,18 +32,20 @@ public class ArticleServiceImp implements ArticleService {
     ArticleContentTblMapper articleContentTblMapper;
 
     @Override
-    public List<ArticleTbl> selectArticles() {
+    public List<ArticleTbl> selectArticles(int offset, int num) {
         ArticleTblExample example = new ArticleTblExample();
         ArticleTblExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedEqualTo((byte) 0);
-        return articleTblMapper.selectByExample(example);
+        example.setOrderByClause("published_time DESC LIMIT "+offset+","+num);
+        return selectContent(articleTblMapper.selectByExample(example));
     }
 
     @Override
     public PageInfo selectArticlesByPage(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         ArticleTblExample example = new ArticleTblExample();
         example.createCriteria().andDeletedEqualTo((byte) 0);
-        PageHelper.startPage(pageNum, pageSize);
+        example.setOrderByClause("published_time DESC");
         List<ArticleTbl> articles = articleTblMapper.selectByExample(example);
         PageInfo pageInfo = new PageInfo(selectContent(articles));
         return pageInfo;
@@ -51,9 +53,10 @@ public class ArticleServiceImp implements ArticleService {
 
     @Override
     public PageInfo selectArticlesByPageAndUser(int pageNum, int pageSize, int author_id) {
+        PageHelper.startPage(pageNum, pageSize);
         ArticleTblExample example = new ArticleTblExample();
         example.createCriteria().andDeletedEqualTo((byte) 0).andAuthorIdEqualTo(author_id);
-        PageHelper.startPage(pageNum, pageSize);
+        example.setOrderByClause("published_time DESC");
         List<ArticleTbl> articles = articleTblMapper.selectByExample(example);
         PageInfo pageInfo = new PageInfo(selectContent(articles));
         return pageInfo;
