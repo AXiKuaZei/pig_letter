@@ -9,6 +9,11 @@ public class ArticleTbl {
 
     private Integer authorId;
 
+    /**
+     * from user_tbl
+     */
+    private String author;
+
     private Date publishedTime;
 
     private Date lastUpdatedTime;
@@ -74,5 +79,13 @@ public class ArticleTbl {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

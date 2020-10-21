@@ -1,8 +1,8 @@
 <template>
   <div class="sidemenu">
     <div class="card">
-      <h1>关于网站</h1>
-      <p>巴拉巴拉巴拉</p>
+      <h1>猪@信</h1>
+      <p>茅草屋的日记本</p>
     </div>
     <ul>
       <li><span style="background-color: rgb(124, 235, 101);">目录</span></li>
@@ -21,5 +21,5 @@
 </script>
 
 <style scoped>
-
+  @import url(../css/index.css);
 </style>

@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     {
       path: '/',
@@ -24,6 +24,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: () => import('../views/register.vue')
+    },
+    {
+      path: '/admin/personalCenter',
+      name: 'personalCenter',
+      component: () => import('../views/admin/personalCenter.vue')
     },
     {
       path: '/test',

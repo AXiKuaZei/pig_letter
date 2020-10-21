@@ -1,10 +1,9 @@
-@import "https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css";
-
 body {
     margin:0;
     padding:0;
     font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
     background-color: #aab068;
+    /*background-image: url("/static/asserts/images/spongebob-login.jpg");*/
     /*background-size: cover;*/
 }
 
@@ -58,7 +57,6 @@ body {
     font-size: 20px;
     width: 255px;
     float: left;
-    padding: 2px;
 }
 
 .text-box i{

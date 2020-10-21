@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import indi.axikuazei.pigletter.dao.ArticleContentTblMapper;
 import indi.axikuazei.pigletter.dao.ArticleTblMapper;
+import indi.axikuazei.pigletter.dao.UserTblMapper;
 import indi.axikuazei.pigletter.dao.entity.ArticleContentTbl;
 import indi.axikuazei.pigletter.dao.entity.ArticleContentTblExample;
 import indi.axikuazei.pigletter.dao.entity.ArticleTbl;
@@ -31,13 +32,16 @@ public class ArticleServiceImp implements ArticleService {
     @Autowired
     ArticleContentTblMapper articleContentTblMapper;
 
+    @Autowired
+    UserTblMapper userTblMapper;
+
     @Override
     public List<ArticleTbl> selectArticles(int offset, int num) {
         ArticleTblExample example = new ArticleTblExample();
         ArticleTblExample.Criteria criteria = example.createCriteria();
         criteria.andDeletedEqualTo((byte) 0);
         example.setOrderByClause("published_time DESC LIMIT "+offset+","+num);
-        return selectContent(articleTblMapper.selectByExample(example));
+        return selectAuthor(selectContent(articleTblMapper.selectByExample(example)));
     }
 
     @Override
@@ -47,7 +51,7 @@ public class ArticleServiceImp implements ArticleService {
         example.createCriteria().andDeletedEqualTo((byte) 0);
         example.setOrderByClause("published_time DESC");
         List<ArticleTbl> articles = articleTblMapper.selectByExample(example);
-        PageInfo pageInfo = new PageInfo(selectContent(articles));
+        PageInfo pageInfo = new PageInfo(selectAuthor(selectContent(articles)));
         return pageInfo;
     }
 
@@ -58,7 +62,7 @@ public class ArticleServiceImp implements ArticleService {
         example.createCriteria().andDeletedEqualTo((byte) 0).andAuthorIdEqualTo(author_id);
         example.setOrderByClause("published_time DESC");
         List<ArticleTbl> articles = articleTblMapper.selectByExample(example);
-        PageInfo pageInfo = new PageInfo(selectContent(articles));
+        PageInfo pageInfo = new PageInfo(selectAuthor(selectContent(articles)));
         return pageInfo;
     }
 
@@ -72,6 +76,14 @@ public class ArticleServiceImp implements ArticleService {
             List<ArticleContentTbl> contents= articleContentTblMapper.selectByExampleWithBLOBs(cexample);
             String content = contents.get(0).getContent();
             article.setContent(content);
+        }
+        return articles;
+    }
+
+    @Override
+    public List<ArticleTbl> selectAuthor(List<ArticleTbl> articles) {
+        for(ArticleTbl article:articles){
+            article.setAuthor(userTblMapper.selectByPrimaryKey(article.getAuthorId()).getNickName());
         }
         return articles;
     }

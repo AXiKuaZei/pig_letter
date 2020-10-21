@@ -1,11 +1,11 @@
 /* 响应式布局 - 屏幕尺寸小于 800px 时，两列布局改为上下布局 */
 @media screen and (max-width: 1000px) {
-    .textcontent, .sidemenu {   
+    .textcontent, .sidemenu {
       width: 100%;
       padding: 0;
     }
   }
-   
+
   /* 响应式布局 -屏幕尺寸小于 400px 时，导航等布局改为上下布局 */
   @media screen and (max-width: 400px) {
     .topmenu a {
@@ -17,7 +17,7 @@
 /* 整体背景和字体设置 */
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background-color:#ececec;
+    /*background-color: white;*/
     padding: 0px;
     margin: 0;
 }
@@ -47,7 +47,7 @@ body{
 
 .topmenu li{
     display: block;
-    float: left; 
+    float: left;
 }
 
 
@@ -150,12 +150,12 @@ body{
 
 .sidemenu li a:hover{
     background-color: salmon;
-    
+
 }
 
 .sidemenu li a:active{
     background-color: rgb(160, 86, 78);
-    
+
 }
 
 
@@ -165,8 +165,8 @@ body{
     width: 100%;
     padding: 20px;
   }
-   
-  /* 文章卡片效果 */
+
+/* 文章卡片效果 */
 .card {
     background-color: white;
     padding: 17px 37px;

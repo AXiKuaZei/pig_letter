@@ -1,10 +1,12 @@
 <template>
-  <Page :total="100" show-elevator />
+<div>
+  <h>hello administer</h>
+</div>
 </template>
 
 <script>
     export default {
-        name: "page"
+        name: "personalCenter.vue"
     }
 </script>
 

@@ -43,6 +43,14 @@ public class UserTbl {
         this.pswd = pswd == null ? null : pswd.trim();
     }
 
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt == null ? null : salt.trim();
+    }
+
     public String getNickName() {
         return nickName;
     }
@@ -73,13 +81,5 @@ public class UserTbl {
 
     public void setRegistedTime(Date registedTime) {
         this.registedTime = registedTime;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 }

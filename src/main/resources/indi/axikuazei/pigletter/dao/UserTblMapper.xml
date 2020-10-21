@@ -5,6 +5,7 @@
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="pswd" jdbcType="VARCHAR" property="pswd" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="gender" jdbcType="TINYINT" property="gender" />
     <result column="deleted" jdbcType="TINYINT" property="deleted" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, user_name, pswd, nick_name, gender, deleted, registed_time
+    user_id, user_name, pswd, salt, nick_name, gender, deleted, registed_time
   </sql>
   <select id="selectByExample" parameterType="indi.axikuazei.pigletter.dao.entity.UserTblExample" resultMap="BaseResultMap">
     select
@@ -103,11 +104,11 @@
   </delete>
   <insert id="insert" parameterType="indi.axikuazei.pigletter.dao.entity.UserTbl">
     insert into user_tbl (user_id, user_name, pswd, 
-      nick_name, gender, deleted, 
-      registed_time)
+      salt, nick_name, gender, 
+      deleted, registed_time)
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{pswd,jdbcType=VARCHAR}, 
-      #{nickName,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{deleted,jdbcType=TINYINT}, 
-      #{registedTime,jdbcType=TIMESTAMP})
+      #{salt,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
+      #{deleted,jdbcType=TINYINT}, #{registedTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="indi.axikuazei.pigletter.dao.entity.UserTbl">
     insert into user_tbl
@@ -120,6 +121,9 @@
       </if>
       <if test="pswd != null">
         pswd,
+      </if>
+      <if test="salt != null">
+        salt,
       </if>
       <if test="nickName != null">
         nick_name,
@@ -143,6 +147,9 @@
       </if>
       <if test="pswd != null">
         #{pswd,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
       </if>
       <if test="nickName != null">
         #{nickName,jdbcType=VARCHAR},
@@ -176,6 +183,9 @@
       <if test="record.pswd != null">
         pswd = #{record.pswd,jdbcType=VARCHAR},
       </if>
+      <if test="record.salt != null">
+        salt = #{record.salt,jdbcType=VARCHAR},
+      </if>
       <if test="record.nickName != null">
         nick_name = #{record.nickName,jdbcType=VARCHAR},
       </if>
@@ -198,6 +208,7 @@
     set user_id = #{record.userId,jdbcType=INTEGER},
       user_name = #{record.userName,jdbcType=VARCHAR},
       pswd = #{record.pswd,jdbcType=VARCHAR},
+      salt = #{record.salt,jdbcType=VARCHAR},
       nick_name = #{record.nickName,jdbcType=VARCHAR},
       gender = #{record.gender,jdbcType=TINYINT},
       deleted = #{record.deleted,jdbcType=TINYINT},
@@ -214,6 +225,9 @@
       </if>
       <if test="pswd != null">
         pswd = #{pswd,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
       </if>
       <if test="nickName != null">
         nick_name = #{nickName,jdbcType=VARCHAR},
@@ -234,6 +248,7 @@
     update user_tbl
     set user_name = #{userName,jdbcType=VARCHAR},
       pswd = #{pswd,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
       nick_name = #{nickName,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=TINYINT},
       deleted = #{deleted,jdbcType=TINYINT},

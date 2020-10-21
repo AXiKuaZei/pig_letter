@@ -8,10 +8,7 @@ import indi.axikuazei.pigletter.utils.MDUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,20 +26,15 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/login")
-    public String login(){
-        return "/login";
-    }
-
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest req){
+    @PostMapping("/user/logout")
+    public ResultApi logout(HttpServletRequest req){
         req.getSession().removeAttribute("user");
-        return "redirect:/index";
+        return ResultApi.newSuccessResult();
     }
 
-    @PostMapping("/login")
-    public ResultApi login(String userName, String password, HttpServletRequest req){
-        List<UserTbl> users = userService.selectUserByName(userName);
+    @PostMapping("/user/login")
+    public ResultApi login(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest req){
+        List<UserTbl> users = userService.selectUserByName(username);
         if(users.size()!=1){
             return ResultApi.newFailResult();
         }else{
@@ -57,25 +49,21 @@ public class UserController {
         }
     }
 
-
-    @GetMapping("/register")
-    public String register(){
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public ResultApi register(String userName, String password, String nickName){
-        UserTbl user = new UserTbl();
-        user.setUserName(userName);
+    @PostMapping("/user/register")
+    public ResultApi register(@RequestBody UserTbl user){
         String salt = UUID.randomUUID().toString();
-        user.setPswd(MDUtils.sha256(password,salt));
-        user.setNickName(nickName);
+        user.setSalt(salt);
+        user.setPswd(MDUtils.sha256(user.getPswd(),salt));
         int res = userService.insertNewUser(user);
         return res==1?ResultApi.newSuccessResult():ResultApi.newFailResult();
     }
 
-    @RequestMapping("/personalCenter")
-    public String personCenter(){
-        return "admin/personalCenter";
+    @GetMapping("user/exist/{username}")
+    public  ResultApi exist(@PathVariable("username") String username){
+        if(userService.existsUser(username)){
+            return ResultApi.newFailResult();
+        }else{
+            return ResultApi.newSuccessResult();
+        }
     }
 }

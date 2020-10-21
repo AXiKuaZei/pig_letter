@@ -2,14 +2,14 @@
   <div>
     <div class="topmenu">
       <ul>
-        <li><a href='/index'>首页</a></li>
+        <li><router-link to='/home'>首页</router-link></li>
         <li><a href="https://bilibili.com">哔哩哔哩</a></li>
-        <li><a href="#">星星海</a></li>
-        <li><a href="/article">所有文章</a></li>
-        <li><a href="#">资源站</a></li>
-        <li style="float: right;"><a href="/register">注册</a></li>
+        <li><router-link to="#">星星海</router-link></li>
+        <li><router-link to="/article">所有文章</router-link></li>
+        <li><router-link to="#">资源站</router-link></li>
+        <li style="float: right;"><router-link to="/register">注册</router-link></li>
         <div class="topmenu2">
-          <li><a href="/login">登录</a></li>
+          <li><router-link to="login">登录</router-link></li>
         </div>
       </ul>
     </div>
@@ -21,7 +21,6 @@
     name: 'base'
   }
 </script>
-
-<style>
+<style scoped>
   @import url(../css/index.css);
 </style>
