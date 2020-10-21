@@ -9,7 +9,7 @@
         <li><router-link to="#">资源站</router-link></li>
         <li style="float: right;"><router-link to="/register">注册</router-link></li>
         <div class="topmenu2">
-          <li><router-link to="login">登录</router-link></li>
+          <li><router-link to="/login">登录</router-link></li>
         </div>
       </ul>
     </div>

@@ -31,6 +31,11 @@ export default new Router({
       component: () => import('../views/admin/personalCenter.vue')
     },
     {
+      path: '/admin/console',
+      name: 'console',
+      component: () => import('../views/admin/console.vue')
+    },
+    {
       path: '/test',
       name: 'test',
       component: () => import('../views/test.vue')
