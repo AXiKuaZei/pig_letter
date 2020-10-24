@@ -81,6 +81,18 @@ public class ArticleServiceImp implements ArticleService {
     }
 
     @Override
+    public ArticleTbl selectContent(ArticleTbl article) {
+        ArticleContentTblExample cexample = new ArticleContentTblExample();
+        cexample.createCriteria()
+                .andArticleIdEqualTo(article.getArticleId())
+                .andDeletedEqualTo((byte)0);
+        List<ArticleContentTbl> contents= articleContentTblMapper.selectByExampleWithBLOBs(cexample);
+        String content = contents.get(0).getContent();
+        article.setContent(content);
+        return article;
+    }
+
+    @Override
     public List<ArticleTbl> selectAuthor(List<ArticleTbl> articles) {
         for(ArticleTbl article:articles){
             article.setAuthor(userTblMapper.selectByPrimaryKey(article.getAuthorId()).getNickName());
@@ -90,7 +102,13 @@ public class ArticleServiceImp implements ArticleService {
 
     @Override
     public int insertArticle(ArticleTbl article) {
-        return articleTblMapper.insertSelective(article);
+        int res = 1;
+        articleTblMapper.insertSelective(article);
+        ArticleContentTbl acTbl = new ArticleContentTbl();
+        acTbl.setContent(article.getContent());
+        acTbl.setArticleId(article.getArticleId());
+        articleContentTblMapper.insertSelective(acTbl);
+        return res;
     }
 
     @Override
@@ -100,11 +118,19 @@ public class ArticleServiceImp implements ArticleService {
 
     @Override
     public ArticleTbl selectArticleByID(int id) {
-        return articleTblMapper.selectByPrimaryKey(id);
+        ArticleTbl articleTbl = articleTblMapper.selectByPrimaryKey(id);
+        return selectContent(articleTbl);
     }
 
     @Override
     public int updateArticle(ArticleTbl article) {
-        return articleTblMapper.updateByPrimaryKeySelective(article);
+        int res = 1;
+        articleTblMapper.updateByPrimaryKeySelective(article);
+        ArticleContentTbl acTbl = new ArticleContentTbl();
+        acTbl.setContent(article.getContent());
+        ArticleContentTblExample example = new ArticleContentTblExample();
+        example.createCriteria().andArticleIdEqualTo(article.getArticleId());
+        articleContentTblMapper.updateByExampleSelective(acTbl,example);
+        return res;
     }
 }

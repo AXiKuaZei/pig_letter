@@ -25,10 +25,17 @@ public class ArticleController {
     ArticleService articleService;
 
     @GetMapping("/article/{offset}/{num}")
-    public ResultApi article(@PathVariable("offset") int offset, @PathVariable("num") int num){
+    public ResultApi articles(@PathVariable("offset") int offset, @PathVariable("num") int num){
         logger.info("select articles at offset:"+offset+" and num:"+num);
         List<ArticleTbl> articles = articleService.selectArticles(offset, num);
         return ResultApi.newSuccessResult(articles);
+    }
+
+    @GetMapping("/article/{id}")
+    public ResultApi articleById(@PathVariable("id") int id){
+        logger.info("select article at id:"+id);
+        ArticleTbl article = articleService.selectArticleByID(id);
+        return ResultApi.newSuccessResult(article);
     }
 
     @PostMapping("/articlePage")
@@ -39,13 +46,13 @@ public class ArticleController {
     }
 
     @PostMapping("/article")
-    public ResultApi articleAdd(ArticleTbl article){
+    public ResultApi articleAdd(@RequestBody ArticleTbl article){
         articleService.insertArticle(article);
         return ResultApi.newSuccessResult();
     }
 
     @PutMapping("/article")
-    public ResultApi articleUpdate(ArticleTbl article){
+    public ResultApi articleUpdate(@RequestBody ArticleTbl article){
         articleService.updateArticle(article);
         return ResultApi.newSuccessResult();
     }

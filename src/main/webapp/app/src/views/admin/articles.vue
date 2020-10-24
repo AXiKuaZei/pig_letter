@@ -143,7 +143,7 @@
           })
         },
         editArticle(articleId){
-          this.$router.push("/admin/article/editor/"+articleId)
+          this.$router.push("/admin/editor/"+articleId)
         },
         deleteArticle(articleId){
           let params = new URLSearchParams()
@@ -180,7 +180,7 @@
           })
         },
         addArticle(){
-           alert()
+           this.$router.push("/admin/editor/new")
         }
     },
     created() {

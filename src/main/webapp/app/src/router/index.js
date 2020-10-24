@@ -41,7 +41,7 @@ export default new Router({
       component: () => import('../views/admin/articles.vue')
     },
     {
-      path: '/admin/editor',
+      path: '/admin/editor/:id',
       name: 'editor',
       component: () => import('../views/admin/editor.vue')
     },

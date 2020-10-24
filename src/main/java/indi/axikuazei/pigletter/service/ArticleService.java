@@ -20,6 +20,8 @@ public interface ArticleService {
 
     List<ArticleTbl> selectContent(List<ArticleTbl> articles);
 
+    ArticleTbl selectContent(ArticleTbl article);
+
     List<ArticleTbl> selectAuthor(List<ArticleTbl> articles);
 
     int insertArticle(ArticleTbl article);
