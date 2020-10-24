@@ -6,10 +6,14 @@ import router from './router'
 import iView from 'view-design'
 import 'view-design/dist/styles/iview.css'
 import axios from 'axios'
+import CKEditor from '@ckeditor/ckeditor5-vue';
+
+Vue.use( CKEditor );
 
 Vue.prototype.$axios = axios
 
 Vue.use(iView)
+
 
 Vue.config.productionTip = false
 

@@ -51,7 +51,7 @@ public class ArticleController {
     }
 
     @DeleteMapping("/article")
-    public ResultApi articleDelete(@RequestBody int articleId){
+    public ResultApi articleDelete(@RequestParam("articleId") int articleId){
         logger.info("delete article:"+articleId);
         int res = articleService.deleteArticleByID(articleId);
         return res==1?ResultApi.newSuccessResult():ResultApi.newFailResult();
@@ -59,8 +59,8 @@ public class ArticleController {
 
 
     @DeleteMapping("/articleMulti")
-    public ResultApi articleDelete(@RequestBody Integer[] articleId){
-        for(Integer i:articleId){
+    public ResultApi articleDelete(@RequestParam("articleIds") Integer[] articleIds){
+        for(Integer i:articleIds){
             if(articleService.deleteArticleByID(i)==0){
                 return ResultApi.newFailResult();
             }

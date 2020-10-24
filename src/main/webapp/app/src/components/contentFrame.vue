@@ -1,10 +1,10 @@
 <template>
-  <Page :total="100" show-elevator />
+
 </template>
 
 <script>
     export default {
-        name: "page"
+        name: "templateContent"
     }
 </script>
 

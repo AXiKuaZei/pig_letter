@@ -1,5 +1,7 @@
 package indi.axikuazei.pigletter.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class UserTbl {
@@ -17,6 +19,7 @@ public class UserTbl {
 
     private Byte deleted;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date registedTime;
 
     public Integer getUserId() {

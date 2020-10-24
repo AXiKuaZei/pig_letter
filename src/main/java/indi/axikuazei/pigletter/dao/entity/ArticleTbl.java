@@ -1,5 +1,7 @@
 package indi.axikuazei.pigletter.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class ArticleTbl {
@@ -14,8 +16,10 @@ public class ArticleTbl {
      */
     private String author;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date publishedTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastUpdatedTime;
 
     private Byte deleted;

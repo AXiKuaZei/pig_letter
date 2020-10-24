@@ -13,7 +13,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^23.0.0",
+    "@ckeditor/ckeditor5-vue": "^1.0.3",
     "axios": "^0.20.0",
+    "editor.md": "^1.5.0",
+    "medium-editor": "^5.23.3",
     "qs": "^6.9.4",
     "view-design": "^4.3.2",
     "vue": "^2.5.2",
