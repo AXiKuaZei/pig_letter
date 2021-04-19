@@ -15,8 +15,8 @@
 
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection
-                driverClass="com.mysql.cj.jdbc.Driver"
-                connectionURL="jdbc:mysql://192.168.1.108:3306/pigletter?serverTimezone=GMT%2B8" userId="axikuazei" password="maojiawei1">
+                driverClass="org.mariadb.jdbc.Driver"
+                connectionURL="jdbc:mariadb://localhost:3306/pigletter?serverTimezone=UTC" userId="root" password="maojiawei1">
         </jdbcConnection>
 
 

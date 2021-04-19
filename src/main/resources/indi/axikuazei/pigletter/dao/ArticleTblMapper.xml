@@ -108,8 +108,7 @@
       #{publishedTime,jdbcType=TIMESTAMP}, #{lastUpdatedTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=TINYINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="indi.axikuazei.pigletter.dao.entity.ArticleTbl" keyProperty="articleId"
-          keyColumn="article_id" useGeneratedKeys="true">
+  <insert id="insertSelective" parameterType="indi.axikuazei.pigletter.dao.entity.ArticleTbl">
     insert into article_tbl
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="articleId != null">

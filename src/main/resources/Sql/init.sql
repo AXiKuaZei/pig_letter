@@ -1,5 +1,7 @@
 CREATE DATABASE `pigletter`;
 
+USE 'pigletter';
+
 CREATE TABLE IF NOT EXISTS `article_tbl`(
    `article_id` INT UNSIGNED AUTO_INCREMENT,
    `title` VARCHAR(40) NOT NULL,
@@ -30,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `user_tbl`(
    PRIMARY KEY (`user_id`)
 )DEFAULT CHARSET=UTF8MB4;
 
-CREATE TABLE IF NOT EXISTS
 
 #-------------------------------init
 #pwd=m123456
