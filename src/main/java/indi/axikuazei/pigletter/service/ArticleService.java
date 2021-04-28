@@ -1,9 +1,7 @@
 package indi.axikuazei.pigletter.service;
 
-
 import com.github.pagehelper.PageInfo;
 import indi.axikuazei.pigletter.dao.entity.ArticleTbl;
-
 import java.util.List;
 
 /**
@@ -14,9 +12,9 @@ import java.util.List;
 public interface ArticleService {
     List<ArticleTbl> selectArticles(int offset, int num);
 
-    PageInfo selectArticlesByPage(int pageNum, int pageSize);
+    PageInfo<ArticleTbl> selectArticlesByPage(int pageNum, int pageSize);
 
-    PageInfo selectArticlesByPageAndUser(int pageNum, int pageSize, int authorId);
+    PageInfo<ArticleTbl> selectArticlesByPageAndUser(int pageNum, int pageSize, int authorId);
 
     List<ArticleTbl> selectContent(List<ArticleTbl> articles);
 

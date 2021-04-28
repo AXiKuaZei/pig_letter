@@ -45,24 +45,24 @@ public class ArticleServiceImp implements ArticleService {
     }
 
     @Override
-    public PageInfo selectArticlesByPage(int pageNum, int pageSize) {
+    public PageInfo<ArticleTbl> selectArticlesByPage(int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         ArticleTblExample example = new ArticleTblExample();
         example.createCriteria().andDeletedEqualTo((byte) 0);
         example.setOrderByClause("published_time DESC");
         List<ArticleTbl> articles = articleTblMapper.selectByExample(example);
-        PageInfo pageInfo = new PageInfo(selectAuthor(selectContent(articles)));
+        PageInfo<ArticleTbl> pageInfo = new PageInfo<ArticleTbl>(selectAuthor(selectContent(articles)));
         return pageInfo;
     }
 
     @Override
-    public PageInfo selectArticlesByPageAndUser(int pageNum, int pageSize, int author_id) {
+    public PageInfo<ArticleTbl> selectArticlesByPageAndUser(int pageNum, int pageSize, int author_id) {
         PageHelper.startPage(pageNum, pageSize);
         ArticleTblExample example = new ArticleTblExample();
         example.createCriteria().andDeletedEqualTo((byte) 0).andAuthorIdEqualTo(author_id);
         example.setOrderByClause("published_time DESC");
         List<ArticleTbl> articles = articleTblMapper.selectByExample(example);
-        PageInfo pageInfo = new PageInfo(selectAuthor(selectContent(articles)));
+        PageInfo<ArticleTbl> pageInfo = new PageInfo<ArticleTbl>(selectAuthor(selectContent(articles)));
         return pageInfo;
     }
 

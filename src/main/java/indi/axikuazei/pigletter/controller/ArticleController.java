@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * @author axikuazei
- * @date 2020/9/17 下午3:59
- */
+
 @RestController
 public class ArticleController {
 
@@ -41,7 +38,7 @@ public class ArticleController {
     @PostMapping("/articlePage")
     public ResultApi articlePage(@RequestParam(value = "pageNum",defaultValue="1") int pageNum, @RequestParam(value = "pageSize",defaultValue="5") int pageSize){
         logger.info("select articles at page:"+pageNum+" and size:"+pageSize);
-        PageInfo pageInfo = articleService.selectArticlesByPage(pageNum, pageSize);
+        PageInfo<ArticleTbl> pageInfo = articleService.selectArticlesByPage(pageNum, pageSize);
         return ResultApi.newSuccessResult(pageInfo);
     }
 

@@ -1,54 +1,25 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
 
-Vue.use(Router)
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  }
+]
 
-export default new Router({
-  // mode: 'history',
-  routes: [
-    {
-      path: '/',
-      redirect: '/home'
-    },
-    {
-      path: '/home',
-      name: 'home',
-      component: () => import('../views/home.vue')
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/login.vue')
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('../views/register.vue')
-    },
-    {
-      path: '/menu',
-      name: 'menu',
-      component: () => import('../components//consoleMenu.vue')
-    },
-    {
-      path: '/admin/personalCenter',
-      name: 'personalCenter',
-      component: () => import('../views/admin/personalCenter.vue')
-    },
-    {
-      path: '/admin/articles',
-      name: 'articles',
-      component: () => import('../views/admin/articles.vue')
-    },
-    {
-      path: '/admin/editor/:id',
-      name: 'editor',
-      component: () => import('../views/admin/editor.vue')
-    },
-    {
-      path: '/test',
-      name: 'test',
-      component: () => import('../views/test.vue')
-    }
-  ]
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
 })
+
+export default router

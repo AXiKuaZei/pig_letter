@@ -1,9 +1,6 @@
 package indi.axikuazei.pigletter.beans;
 
-/**
- * @author axikuazei
- * @date 2020/9/17 下午3:59
- */
+
 public class ResultApi {
     private int status;
     private String message;
