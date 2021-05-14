@@ -6,6 +6,9 @@ CREATE TABLE IF NOT EXISTS `article_tbl`(
    `article_id` INT UNSIGNED AUTO_INCREMENT,
    `title` VARCHAR(40) NOT NULL,
    `author_id` INT NOT NULL,
+   `private` TINYINT NOT NULL DEFAULT 0,
+   'star_num' INT NOT NULL DEFAULT 0,
+   'comment_num' INT NOT NULL DEFAULT 0,
    `published_time` TIMESTAMP DEFAULT NOW(),
    `last_updated_time` TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
    `deleted` TINYINT NOT NULL default 0,
@@ -20,17 +23,52 @@ CREATE TABLE IF NOT EXISTS `article_content_tbl`(
    PRIMARY KEY (`id`)
 )DEFAULT CHARSET=UTF8MB4;
 
+CREATE TABLE IF NOT EXISTS `resource_mapping_tbl`(
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `article_id` INT NOT NULL,
+   `resource_path` VARCHAR(1000) NOT NULL,
+   `deleted` TINYINT NOT NULL DEFAULT 0,
+   PRIMARY KEY (`id`)
+)DEFAULT CHARSET=UTF8MB4;
+
 CREATE TABLE IF NOT EXISTS `user_tbl`(
    `user_id` INT UNSIGNED AUTO_INCREMENT,
    `user_name` VARCHAR(32) UNIQUE NOT NULL,
    `pswd` VARCHAR(64) NOT NULL,
    `salt` VARCHAR(64) NOT NULL,
    `nick_name` VARCHAR(40) NOT NULL,
+   `profile_photo_path` VARCHAR(1000),
+   `mail` VARCHAR(64),
+   `birthday` VARCHAR(64),
+   `description` VARCHAR(500),
    `gender` TINYINT NOT NULL DEFAULT 1,
    `deleted` TINYINT NOT NULL DEFAULT 0,
    `registed_time` TIMESTAMP DEFAULT NOW(),
    PRIMARY KEY (`user_id`)
 )DEFAULT CHARSET=UTF8MB4;
+
+CREATE TABLE IF NOT EXISTS `comment_tbl` (
+  `comment_id` INT UNSIGNED AUTO_INCREMENT,
+  `article_id` INT NOT NULL,
+  `pre_comment_id` INT DEFAULT NULL,
+  `comment_content` text,
+  `user_id` INT DEFAULT NULL,
+  `create_time` TIMESTAMP DEFAULT NOW(),
+  PRIMARY KEY (`comment_id`),
+  UNIQUE KEY `pre_comment_id` (`pre_comment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `follows_tbl` (
+  `id` INT AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `follower_id` INT NOT NULL,
+  `status` TINYINT DEFAULT 1,
+  `comment_content` text,
+  `user_id` INT DEFAULT NULL,
+  `create_time` TIMESTAMP DEFAULT NOW(),
+  `last_updated_time` TIMESTAMP DEFAULT NOW() ON UPDATE NOW(),
+  PRIMARY KEY (`id`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 #-------------------------------init
