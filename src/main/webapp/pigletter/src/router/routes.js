@@ -7,6 +7,14 @@ const routes = [
       { 
         path: '', 
         component: () => import('pages/Home.vue') 
+      },
+      { 
+        path: 'articles', 
+        component: () => import('pages/Articles.vue') 
+      },
+      { 
+        path: 'chatroom', 
+        component: () => import('pages/Chatroom.vue') 
       }
     ]
   },
@@ -19,12 +27,16 @@ const routes = [
         component: () => import('pages/member/Articles.vue')
       },
       { 
+        path: 'home', 
+        component: () => import('pages/member/Articles.vue')
+      },
+      { 
         path: 'articles', 
         component: () => import('pages/member/Articles.vue')
       },
       { 
-        path: 'photos', 
-        component: () => import('pages/member/Photos.vue')
+        path: 'memo', 
+        component: () => import('pages/member/Memo.vue')
       },
       { 
         path: 'media', 

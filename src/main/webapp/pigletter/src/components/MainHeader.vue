@@ -8,12 +8,9 @@
           Pigletter
         </q-toolbar-title> -->
         <q-tabs >
-          <q-route-tab class="my-tab" to="/" label="首页" />
-          <q-route-tab class="my-tab" to="/articles" label="文章" />
-          <q-route-tab class="my-tab" to="/account/register" label="文章" />
-          <q-route-tab class="my-tab" to="/account/register" label="文章" />
-          <q-route-tab class="my-tab" to="/account/register" label="文章" />
-          <q-route-tab class="my-tab" to="/account/register" label="文章" />
+          <q-route-tab class="my-tab" to="/" label="主页" />
+          <q-route-tab class="my-tab" to="/articles" label="所有文章" />
+          <q-route-tab class="my-tab" to="/chatroom" label="聊天室" />
         </q-tabs>
 
         <q-input 
@@ -48,7 +45,7 @@ export default defineComponent({
 
 <style>
   .q-toolbar {
-    max-width: 1560px;
+    max-width: 1400px;
   }
 
   .my-tab {

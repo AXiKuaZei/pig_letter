@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="hHh lpR lff">
+  <q-layout view="hhh lpr lff">
 
-    <q-header class="bg-primary text-white">
+    <q-header reveal class="bg-primary text-white row  justify-center">
       <q-toolbar >
         <q-tabs inline-label v-model="tab">
             <q-route-tab
@@ -12,10 +12,45 @@
             :to="link.link" 
             />
         </q-tabs>
-        <q-space />
-        <q-avatar>
-          <img src="statics/img/issac.png"/>
-        </q-avatar>
+
+            
+            <q-space />
+
+            <q-btn-dropdown auto-close stretch flat>
+
+              <template v-slot:label>
+                <q-avatar>
+                  <img src="../statics/img/profile.jpeg"/>
+                </q-avatar>
+              </template>
+              
+              <q-list>
+
+                <q-item clickable @click="tab = 'photos'">
+                  <q-avatar>
+                    <img src="../statics/img/profile.jpeg"/>
+                  </q-avatar>
+                </q-item>
+
+                <q-item 
+                clickable
+                v-for="item in dropList"
+                :key="item.title"
+                :to="item.link"
+                >
+                <q-item-section avatar>
+                  <q-avatar 
+                  :icon="item.icon" color="secondary" text-color="white" />
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ item.title }}</q-item-label>
+                </q-item-section>
+                </q-item>
+
+              </q-list>
+            </q-btn-dropdown>
+
+
       </q-toolbar>
     </q-header>
 
@@ -38,11 +73,11 @@
 import { defineComponent, ref } from 'vue'
 
 const rightDrawerOpen = ref(false)
-const linkList = [
+const linkList = ref([
     {
     title: '个人主页',
     icon: 'home',
-    link: '/member'
+    link: '/member/home'
   },
   {
     title: '我的文章',
@@ -50,19 +85,26 @@ const linkList = [
     link: '/member/articles'
   },
   {
+    title: ' 备忘录',
+    icon: 'event_note',
+    link: '/member/memo'
+  },
+  {
     title: '收藏夹',
     icon: 'grade',
     link: '/member/collections'
   },
   {
-    title: '相册',
-    icon: 'photo',
-    link: '/member/photos'
-  },
-  {
-    title: '影音仓库',
+    title: '媒体库',
     icon: 'movie',
     link: '/member/media'
+  }])
+
+  const dropList = ref([
+    {
+    title: '关注',
+    icon: 'favorite',
+    link: '/member/follows'
   },
   {
     title: '留言板',
@@ -70,15 +112,16 @@ const linkList = [
     link: '/member/messages'
   },
   {
-    title: '关注',
-    icon: 'favorite',
-    link: '/member/follows'
-  },
-  {
-    title: '设置',
+    title: ' 设置',
     icon: 'settings',
     link: '/member/settings'
-  }]
+  },
+  {
+    title: '退出',
+    icon: 'exit_to_app',
+    link: '/'
+  }])
+
 
 export default defineComponent({
 
@@ -86,6 +129,7 @@ export default defineComponent({
     return {
       rightDrawerOpen,
       linkList,
+      dropList,
       toggleRightDrawer () {
         rightDrawerOpen.value = !rightDrawerOpen.value
       }
@@ -93,3 +137,13 @@ export default defineComponent({
   }
 })
 </script>
+
+
+<style scoped>
+  .q-toolbar {
+    max-width: 1560px;
+  }
+  .q-header {
+    min-width: 800px;
+  }
+</style>
