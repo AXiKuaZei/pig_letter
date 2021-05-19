@@ -13,6 +13,8 @@ spring:
       max-total: 5
       max-wait-millis: 200
 
+  resources:
+    static-locations: classpath:/static/
 
 mybatis:
   config-location: classpath:sqlMapConfig.xml
